@@ -155,8 +155,8 @@ export function usePaneRegistry({
 	const workspaceId = workspace.id;
 	const isChatV3Enabled = useFeatureFlagEnabled(FEATURE_FLAGS.CHAT_V3) ?? false;
 	const host = useWorkspaceHostTarget(workspaceId);
-	const sandboxUrl =
-		host.status === "ready" && host.kind === "sandbox" ? host.url : null;
+	const desktopUrl =
+		host.status === "ready" && host.kind !== "local" ? host.url : null;
 	const isPagesEnabled = useFeatureFlagEnabled(FEATURE_FLAGS.PAGES) ?? false;
 	const runAgent = workspaceTrpc.agents.run.useMutation();
 	const collections = useCollections();
@@ -705,7 +705,7 @@ export function usePaneRegistry({
 							: d,
 					),
 			},
-			...(sandboxUrl
+			...(desktopUrl
 				? {
 						desktop: {
 							getIcon: () => <Monitor className="size-3.5" />,
@@ -713,7 +713,7 @@ export function usePaneRegistry({
 								t({
 									message: "Desktop",
 								}),
-							renderPane: () => <DesktopPane hostUrl={sandboxUrl} />,
+							renderPane: () => <DesktopPane hostUrl={desktopUrl} />,
 						},
 					}
 				: {}),
@@ -914,7 +914,7 @@ export function usePaneRegistry({
 			focusAgentTerminal,
 			workspaceTrpcUtils,
 			t,
-			sandboxUrl,
+			desktopUrl,
 		],
 	);
 }

@@ -268,8 +268,8 @@ function V2WorkspaceContent() {
 		openPullRequestPane,
 	});
 	const hostTarget = useWorkspaceHostTarget(workspaceId);
-	const isSandbox =
-		hostTarget.status === "ready" && hostTarget.kind === "sandbox";
+	const hasRemoteDesktop =
+		hostTarget.status === "ready" && hostTarget.kind !== "local";
 	const addDesktopTab = useCallback(() => {
 		store.getState().addTab({
 			panes: [{ kind: "desktop", data: { kind: "desktop" } }],
@@ -332,7 +332,7 @@ function V2WorkspaceContent() {
 		paneRegistry,
 		launcher,
 		onBeforeCloseTab,
-		isSandbox,
+		hasRemoteDesktop,
 	});
 	useHotkey("QUICK_OPEN", handleQuickOpen);
 	useHotkey("RUN_WORKSPACE_COMMAND", () => {
@@ -398,7 +398,7 @@ function V2WorkspaceContent() {
 									onAddChatV3={isChatV3Enabled ? addChatV3Tab : undefined}
 									onAddBrowser={addBrowserTab}
 									onAddChanges={openChangesPane}
-									onAddDesktop={isSandbox ? addDesktopTab : undefined}
+									onAddDesktop={hasRemoteDesktop ? addDesktopTab : undefined}
 									showPresetsBar={showPresetsBar}
 									onToggleShowPresetsBar={setShowPresetsBar}
 								/>

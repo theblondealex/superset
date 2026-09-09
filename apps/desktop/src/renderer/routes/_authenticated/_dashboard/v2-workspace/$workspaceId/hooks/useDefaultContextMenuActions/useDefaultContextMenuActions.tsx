@@ -46,7 +46,7 @@ export function useDefaultContextMenuActions({
 	const defaultBrowserUrl = useDefaultBrowserUrl();
 	const { workspace } = useWorkspace();
 	const host = useWorkspaceHostTarget(workspace.id);
-	const isSandbox = host.status === "ready" && host.kind === "sandbox";
+	const hasRemoteDesktop = host.status === "ready" && host.kind !== "local";
 
 	return useMemo<ContextMenuActionConfig<PaneViewerData>[]>(
 		() => [
@@ -105,7 +105,7 @@ export function useDefaultContextMenuActions({
 					});
 				},
 			},
-			...(isSandbox
+			...(hasRemoteDesktop
 				? [
 						{
 							key: "split-with-desktop",
@@ -195,7 +195,7 @@ export function useDefaultContextMenuActions({
 			launcher,
 			defaultBrowserUrl,
 			t,
-			isSandbox,
+			hasRemoteDesktop,
 		],
 	);
 }

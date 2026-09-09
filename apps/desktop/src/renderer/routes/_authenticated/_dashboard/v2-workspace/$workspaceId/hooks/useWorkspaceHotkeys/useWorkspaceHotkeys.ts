@@ -30,7 +30,7 @@ export function useWorkspaceHotkeys({
 	paneRegistry,
 	launcher,
 	onBeforeCloseTab,
-	isSandbox,
+	hasRemoteDesktop,
 }: {
 	store: StoreApi<WorkspaceStore<PaneViewerData>>;
 	matchedPresets: V2TerminalPresetRow[];
@@ -39,7 +39,7 @@ export function useWorkspaceHotkeys({
 	openChangesPane: () => void;
 	paneRegistry: PaneRegistry<PaneViewerData>;
 	launcher: TerminalLauncher;
-	isSandbox: boolean;
+	hasRemoteDesktop: boolean;
 	onBeforeCloseTab?: WorkspaceProps<PaneViewerData>["onBeforeCloseTab"];
 }) {
 	const { setRightSidebarOpen } = useV2UserPreferences();
@@ -273,7 +273,7 @@ export function useWorkspaceHotkeys({
 				},
 			});
 		},
-		{ enabled: isSandbox },
+		{ enabled: hasRemoteDesktop },
 	);
 
 	useHotkey("SPLIT_WITH_BROWSER", () => {
