@@ -5,6 +5,7 @@ import {
 	getHostServiceWsToken,
 	getHostServiceWsUrlParams,
 } from "renderer/lib/host-service-auth";
+import { hostServiceUrl } from "renderer/lib/host-service-url";
 
 type Status = "connecting" | "connected" | "unavailable" | "error";
 
@@ -13,7 +14,7 @@ interface DesktopPaneProps {
 }
 
 function buildSocketUrl(hostUrl: string): string {
-	const url = new URL("/desktop/vnc", hostUrl);
+	const url = hostServiceUrl(hostUrl, "/desktop/vnc");
 	url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
 	const token = getHostServiceWsToken(hostUrl);
 	if (token) url.searchParams.set("token", token);

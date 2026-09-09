@@ -1,4 +1,5 @@
 import { getHostServiceWsToken, getHostServiceWsUrlParams } from "renderer/lib/host-service-auth";
+import { hostServiceUrl } from "renderer/lib/host-service-url";
 import { sanitizeUrl } from "../sanitizeUrl";
 
 export interface RemoteBrowserState {
@@ -33,7 +34,7 @@ const EMPTY_STATE: RemoteBrowserState = {
 };
 
 function socketUrl(hostUrl: string, initialUrl: string): string {
-	const url = new URL("/remote-browser/cdp", hostUrl);
+	const url = hostServiceUrl(hostUrl, "/remote-browser/cdp");
 	url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
 	url.searchParams.set("url", initialUrl);
 	const token = getHostServiceWsToken(hostUrl);
