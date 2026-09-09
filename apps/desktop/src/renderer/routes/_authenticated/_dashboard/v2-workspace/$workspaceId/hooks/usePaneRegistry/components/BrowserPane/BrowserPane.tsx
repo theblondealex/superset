@@ -5,6 +5,7 @@ import { GlobeIcon, SquareDashedMousePointer, XIcon } from "lucide-react";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ImportHistoryDialog } from "renderer/components/ImportHistoryDialog";
+import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import {
 	BROWSER_IMPORT_BANNER_ID,
@@ -27,6 +28,7 @@ import {
 import { findBarStore, useFindBarOpen } from "./findBarStore";
 import { useBrowserState } from "./hooks/useBrowserState";
 import { usePersistentWebview } from "./hooks/usePersistentWebview";
+import { RemoteBrowserPane } from "./RemoteBrowserPane";
 
 function getSingleBrowserPane(
 	tab: Tab<PaneViewerData>,
@@ -68,6 +70,25 @@ interface BrowserPaneProps {
 }
 
 export function BrowserPane({
+	ctx,
+	onCreateNewAgentSession,
+	onFocusAgentTerminal,
+}: BrowserPaneProps) {
+	const { workspaceId } = useParams({ strict: false });
+	const host = useWorkspaceHostTarget(workspaceId ?? null);
+	if (host.status === "ready" && host.kind === "remote") {
+		return <RemoteBrowserPane ctx={ctx} hostUrl={host.url} />;
+	}
+	return (
+		<LocalBrowserPane
+			ctx={ctx}
+			onCreateNewAgentSession={onCreateNewAgentSession}
+			onFocusAgentTerminal={onFocusAgentTerminal}
+		/>
+	);
+}
+
+function LocalBrowserPane({
 	ctx,
 	onCreateNewAgentSession,
 	onFocusAgentTerminal,

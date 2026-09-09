@@ -22,6 +22,10 @@ import { WorkspaceFilesystemManager } from "./runtime/filesystem";
 import type { GitCredentialProvider } from "./runtime/git";
 import { createGitEnvResolver, createGitFactory } from "./runtime/git";
 import { runMainWorkspaceSweep } from "./runtime/main-workspace-sweep";
+import {
+	registerRemoteBrowserRoute,
+	RemoteBrowserRuntime,
+} from "./runtime/remote-browser";
 import { runProjectBackfill } from "./runtime/project-backfill";
 import { PullRequestRuntimeManager } from "./runtime/pull-requests";
 import {
@@ -169,6 +173,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 
 	const app = new Hono();
 	const { injectWebSocket, upgradeWebSocket } = createNodeWebSocket({ app });
+	const remoteBrowser = new RemoteBrowserRuntime();
 
 	app.use(
 		"*",
@@ -310,6 +315,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 	app.use("/chat-v3/*", wsAuth);
 	app.use("/browser/*", wsAuth);
 	app.use("/desktop/*", wsAuth);
+	app.use("/remote-browser/*", wsAuth);
 	app.use("/fwd", wsAuth);
 
 	registerEventBusRoute({ app, eventBus, upgradeWebSocket });
@@ -319,6 +325,7 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		getBridge: () => config.browserBridge,
 	});
 	registerDesktopRoute({ app, upgradeWebSocket });
+	registerRemoteBrowserRoute({ app, upgradeWebSocket, runtime: remoteBrowser });
 	registerForwardMuxRoute({
 		app,
 		upgradeWebSocket,

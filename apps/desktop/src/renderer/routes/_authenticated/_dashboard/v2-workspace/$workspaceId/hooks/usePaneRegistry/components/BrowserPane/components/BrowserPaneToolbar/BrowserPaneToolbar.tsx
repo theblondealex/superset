@@ -5,6 +5,8 @@ import { cn } from "@superset/ui/utils";
 import { SquareDashedMousePointer } from "lucide-react";
 import { useCallback } from "react";
 import { TbDeviceDesktop } from "react-icons/tb";
+import { useParams } from "@tanstack/react-router";
+import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import type { PaneViewerData } from "../../../../../../types";
 import { browserRuntimeRegistry } from "../../browserRuntimeRegistry";
@@ -17,12 +19,22 @@ import { findBarStore } from "../../findBarStore";
 import { useBrowserState } from "../../hooks/useBrowserState";
 import { BrowserOverflowMenu } from "../BrowserOverflowMenu";
 import { BrowserToolbar } from "../BrowserToolbar";
+import { RemoteBrowserPaneToolbar } from "../../RemoteBrowserPane";
 
 interface BrowserPaneToolbarProps {
 	ctx: RendererContext<PaneViewerData>;
 }
 
 export function BrowserPaneToolbar({ ctx }: BrowserPaneToolbarProps) {
+	const { workspaceId } = useParams({ strict: false });
+	const host = useWorkspaceHostTarget(workspaceId ?? null);
+	if (host.status === "ready" && host.kind === "remote") {
+		return <RemoteBrowserPaneToolbar ctx={ctx} />;
+	}
+	return <LocalBrowserPaneToolbar ctx={ctx} />;
+}
+
+function LocalBrowserPaneToolbar({ ctx }: BrowserPaneToolbarProps) {
 	const paneId = ctx.pane.id;
 	const state = useBrowserState(paneId);
 	const designMode = useDesignModeState(paneId);
