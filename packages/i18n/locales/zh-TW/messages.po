@@ -9591,6 +9591,9 @@ msgstr "只有主機擁有者才能更改成員關係"
 msgid "Only host owners can change this location."
 msgstr "只有主機擁有者可以更改此位置。"
 
+msgid "Only host owners can change this setting."
+msgstr "只有主機擁有者可以變更此設定。"
+
 msgid "Only host owners can delete this host"
 msgstr "只有主機擁有者才能刪除此主機"
 
@@ -9692,6 +9695,9 @@ msgstr "在GitHub上開啟分支"
 
 msgid "Open Browser"
 msgstr "開啟瀏覽器"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "在此主機上執行的 Chromium 中開啟瀏覽器窗格。會使用此主機的 localhost 和使用者代理程式，而非此 Mac 的，且其連接埠不會轉送到您的 Mac。"
 
 msgid "Open changes"
 msgstr "開啟更改"
@@ -15282,6 +15288,9 @@ msgstr "請使用Superset托盤選單 > 主機服務 > 重啟，然後重試。"
 
 msgid "Use this folder"
 msgstr "使用此資料夾"
+
+msgid "Use this host's browser"
+msgstr "使用此主機的瀏覽器"
 
 msgid "Use this repo"
 msgstr "使用此儲存庫"

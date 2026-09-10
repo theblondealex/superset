@@ -9591,6 +9591,9 @@ msgstr "Chỉ chủ sở hữu host mới thay đổi được thành viên"
 msgid "Only host owners can change this location."
 msgstr "Chỉ chủ sở hữu host mới đổi được vị trí này."
 
+msgid "Only host owners can change this setting."
+msgstr "Chỉ chủ sở hữu máy chủ mới có thể thay đổi cài đặt này."
+
 msgid "Only host owners can delete this host"
 msgstr "Chỉ chủ sở hữu host mới xóa được host này"
 
@@ -9692,6 +9695,9 @@ msgstr "Mở nhánh trên GitHub"
 
 msgid "Open Browser"
 msgstr "Mở trình duyệt"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Mở các ngăn Trình duyệt trong Chromium chạy trên máy chủ này. localhost và tác nhân người dùng của máy chủ này được dùng thay cho Mac này, và các cổng của nó không được chuyển tiếp đến Mac của bạn."
 
 msgid "Open changes"
 msgstr "Mở thay đổi"
@@ -15282,6 +15288,9 @@ msgstr "Dùng menu khay Superset > Host Service > Restart, rồi thử lại."
 
 msgid "Use this folder"
 msgstr "Dùng thư mục này"
+
+msgid "Use this host's browser"
+msgstr "Dùng trình duyệt của máy chủ này"
 
 msgid "Use this repo"
 msgstr "Dùng repo này"

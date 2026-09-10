@@ -11,6 +11,7 @@ export interface RegisterRemoteBrowserRouteOptions {
 	app: Hono;
 	upgradeWebSocket: NodeWebSocket["upgradeWebSocket"];
 	runtime: RemoteBrowserRuntime;
+	isEnabled: () => boolean;
 }
 
 /**
@@ -22,6 +23,7 @@ export function registerRemoteBrowserRoute({
 	app,
 	upgradeWebSocket,
 	runtime,
+	isEnabled,
 }: RegisterRemoteBrowserRouteOptions) {
 	app.get(
 		"/remote-browser/cdp",
@@ -33,6 +35,10 @@ export function registerRemoteBrowserRoute({
 
 			return {
 				onOpen: (_event, ws) => {
+					if (!isEnabled()) {
+						ws.close(1008, "Remote browser is disabled for this host");
+						return;
+					}
 					void (async () => {
 						try {
 							const endpoint = await runtime.endpoint();

@@ -9591,6 +9591,9 @@ msgstr "只有主机所有者才能更改成员关系"
 msgid "Only host owners can change this location."
 msgstr "只有主机所有者可以更改此位置。"
 
+msgid "Only host owners can change this setting."
+msgstr "只有主机所有者可以更改此设置。"
+
 msgid "Only host owners can delete this host"
 msgstr "只有主机所有者才能删除此主机"
 
@@ -9692,6 +9695,9 @@ msgstr "在GitHub上打开分支"
 
 msgid "Open Browser"
 msgstr "打开浏览器"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "在此主机上运行的 Chromium 中打开浏览器窗格。将使用此主机的 localhost 和用户代理，而不是此 Mac 的，且其端口不会转发到您的 Mac。"
 
 msgid "Open changes"
 msgstr "打开更改"
@@ -15282,6 +15288,9 @@ msgstr "请使用Superset托盘菜单 > 主机服务 > 重启，然后重试。"
 
 msgid "Use this folder"
 msgstr "使用此文件夹"
+
+msgid "Use this host's browser"
+msgstr "使用此主机的浏览器"
 
 msgid "Use this repo"
 msgstr "使用此仓库"

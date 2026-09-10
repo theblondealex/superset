@@ -1,0 +1,1 @@
+ALTER TABLE `host_settings` ADD `remote_browser_enabled` integer DEFAULT false NOT NULL;

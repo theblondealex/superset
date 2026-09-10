@@ -6,6 +6,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { ImportHistoryDialog } from "renderer/components/ImportHistoryDialog";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { useRemoteBrowserSettings } from "renderer/hooks/host-service/useRemoteBrowserSettings";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import {
 	BROWSER_IMPORT_BANNER_ID,
@@ -76,7 +77,14 @@ export function BrowserPane({
 }: BrowserPaneProps) {
 	const { workspaceId } = useParams({ strict: false });
 	const host = useWorkspaceHostTarget(workspaceId ?? null);
-	if (host.status === "ready" && host.kind === "remote") {
+	const remoteBrowser = useRemoteBrowserSettings(
+		host.status === "ready" && host.kind === "remote" ? host.url : null,
+	);
+	if (
+		host.status === "ready" &&
+		host.kind === "remote" &&
+		remoteBrowser.data?.enabled
+	) {
 		return <RemoteBrowserPane ctx={ctx} hostUrl={host.url} />;
 	}
 	return (

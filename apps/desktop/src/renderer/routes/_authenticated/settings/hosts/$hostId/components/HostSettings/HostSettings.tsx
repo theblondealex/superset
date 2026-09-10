@@ -18,6 +18,7 @@ import { AddMemberDropdown } from "./components/AddMemberDropdown";
 import { DeleteHostSection } from "./components/DeleteHostSection";
 import { HostHeader } from "./components/HostHeader";
 import { HostServiceSection } from "./components/HostServiceSection";
+import { RemoteBrowserSection } from "./components/RemoteBrowserSection";
 import type { MemberRowData } from "./components/MembersTable";
 import { MembersTable } from "./components/MembersTable";
 import { WorktreeLocationSection } from "./components/WorktreeLocationSection";
@@ -182,6 +183,14 @@ export function HostSettings({ hostId }: HostSettingsProps) {
 					}}
 					lastSeenAt={hostPresence?.lastSeenAt ?? null}
 				/>
+
+				{isRemoteTarget && (
+					<RemoteBrowserSection
+						hostUrl={hostUrl}
+						isOnline={hostIsOnline}
+						canEdit={Boolean(isOwner)}
+					/>
+				)}
 
 				<WorktreeLocationSection
 					hostUrl={hostUrl}

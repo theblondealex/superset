@@ -9591,6 +9591,9 @@ msgstr "Hanya pemilik host yang bisa mengubah keanggotaan"
 msgid "Only host owners can change this location."
 msgstr "Hanya pemilik host yang bisa mengubah lokasi ini."
 
+msgid "Only host owners can change this setting."
+msgstr "Hanya pemilik host yang dapat mengubah pengaturan ini."
+
 msgid "Only host owners can delete this host"
 msgstr "Hanya pemilik host yang bisa menghapus host ini"
 
@@ -9692,6 +9695,9 @@ msgstr "Buka branch di GitHub"
 
 msgid "Open Browser"
 msgstr "Buka Browser"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Buka panel Browser di Chromium yang berjalan pada host ini. localhost dan agen penggunanya digunakan alih-alih milik Mac ini, dan portnya tidak diteruskan ke Mac Anda."
 
 msgid "Open changes"
 msgstr "Buka perubahan"
@@ -15282,6 +15288,9 @@ msgstr "Pakai menu tray Superset > Host Service > Restart, lalu coba lagi."
 
 msgid "Use this folder"
 msgstr "Pakai folder ini"
+
+msgid "Use this host's browser"
+msgstr "Gunakan browser host ini"
 
 msgid "Use this repo"
 msgstr "Pakai repo ini"

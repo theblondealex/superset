@@ -26,6 +26,7 @@ import {
 	registerRemoteBrowserRoute,
 	RemoteBrowserRuntime,
 } from "./runtime/remote-browser";
+import { isRemoteBrowserEnabled } from "./trpc/router/settings/remote-browser";
 import { runProjectBackfill } from "./runtime/project-backfill";
 import { PullRequestRuntimeManager } from "./runtime/pull-requests";
 import {
@@ -325,7 +326,12 @@ export function createApp(options: CreateAppOptions): CreateAppResult {
 		getBridge: () => config.browserBridge,
 	});
 	registerDesktopRoute({ app, upgradeWebSocket });
-	registerRemoteBrowserRoute({ app, upgradeWebSocket, runtime: remoteBrowser });
+	registerRemoteBrowserRoute({
+		app,
+		upgradeWebSocket,
+		runtime: remoteBrowser,
+		isEnabled: () => isRemoteBrowserEnabled({ db }),
+	});
 	registerForwardMuxRoute({
 		app,
 		upgradeWebSocket,

@@ -9591,6 +9591,9 @@ msgstr "Solo los propietarios del host pueden cambiar la pertenencia"
 msgid "Only host owners can change this location."
 msgstr "Solo los propietarios del host pueden cambiar esta ubicación."
 
+msgid "Only host owners can change this setting."
+msgstr "Solo los propietarios del host pueden cambiar esta configuración."
+
 msgid "Only host owners can delete this host"
 msgstr "Solo los propietarios del host pueden eliminar este host"
 
@@ -9692,6 +9695,9 @@ msgstr "Abrir la rama en GitHub"
 
 msgid "Open Browser"
 msgstr "Abrir el navegador"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Abre paneles de navegador en Chromium que se ejecuta en este host. Se usan su localhost y agente de usuario en lugar de los de este Mac, y sus puertos no se reenvían a tu Mac."
 
 msgid "Open changes"
 msgstr "Abrir cambios"
@@ -15282,6 +15288,9 @@ msgstr "Usa el menú de la bandeja de Superset > Servicio de host > Reiniciar y 
 
 msgid "Use this folder"
 msgstr "Usar esta carpeta"
+
+msgid "Use this host's browser"
+msgstr "Usar el navegador de este host"
 
 msgid "Use this repo"
 msgstr "Usar este repo"

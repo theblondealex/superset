@@ -9591,6 +9591,9 @@ msgstr "Členství mohou měnit jen vlastníci hosta"
 msgid "Only host owners can change this location."
 msgstr "Toto umístění mohou měnit jen vlastníci hosta."
 
+msgid "Only host owners can change this setting."
+msgstr "Toto nastavení mohou změnit pouze vlastníci hostitele."
+
 msgid "Only host owners can delete this host"
 msgstr "Tohoto hosta mohou smazat jen jeho vlastníci"
 
@@ -9692,6 +9695,9 @@ msgstr "Otevřít větev na GitHubu"
 
 msgid "Open Browser"
 msgstr "Otevřít prohlížeč"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Otevřete panely Prohlížeče v Chromiu spuštěném na tomto hostiteli. Používají se jeho localhost a user agent namísto tohoto Macu a jeho porty se nepřesměrovávají do vašeho Macu."
 
 msgid "Open changes"
 msgstr "Otevřít změny"
@@ -15282,6 +15288,9 @@ msgstr "Použijte nabídku Superset na liště > Host Service > Restart a zkuste
 
 msgid "Use this folder"
 msgstr "Použít tuto složku"
+
+msgid "Use this host's browser"
+msgstr "Používat prohlížeč tohoto hostitele"
 
 msgid "Use this repo"
 msgstr "Použít tento repozitář"

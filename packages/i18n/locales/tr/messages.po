@@ -9591,6 +9591,9 @@ msgstr "Üyeliği yalnızca host sahipleri değiştirebilir"
 msgid "Only host owners can change this location."
 msgstr "Bu konumu yalnızca host sahipleri değiştirebilir."
 
+msgid "Only host owners can change this setting."
+msgstr "Bu ayarı yalnızca ana bilgisayar sahipleri değiştirebilir."
+
 msgid "Only host owners can delete this host"
 msgstr "Bu host'u yalnızca host sahipleri silebilir"
 
@@ -9692,6 +9695,9 @@ msgstr "Dalı GitHub'da aç"
 
 msgid "Open Browser"
 msgstr "Tarayıcıyı aç"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Bu ana bilgisayarda çalışan Chromium'da Tarayıcı bölmelerini açın. Bu Mac'in yerine onun localhost'u ve kullanıcı aracısı kullanılır; bağlantı noktaları Mac'inize yönlendirilmez."
 
 msgid "Open changes"
 msgstr "Değişiklikleri aç"
@@ -15282,6 +15288,9 @@ msgstr "Superset tepsi menüsünde Host hizmeti > Yeniden başlat yolunu kullan�
 
 msgid "Use this folder"
 msgstr "Bu klasörü kullan"
+
+msgid "Use this host's browser"
+msgstr "Bu ana bilgisayarın tarayıcısını kullan"
 
 msgid "Use this repo"
 msgstr "Bu depoyu kullan"

@@ -9591,6 +9591,9 @@ msgstr "メンバーシップを変更できるのはホストのオーナーの
 msgid "Only host owners can change this location."
 msgstr "この場所を変更できるのはホストのオーナーのみです。"
 
+msgid "Only host owners can change this setting."
+msgstr "この設定を変更できるのはホスト所有者だけです。"
+
 msgid "Only host owners can delete this host"
 msgstr "このホストを削除できるのはホストのオーナーのみです"
 
@@ -9692,6 +9695,9 @@ msgstr "GitHubでブランチを開く"
 
 msgid "Open Browser"
 msgstr "ブラウザを開く"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "このホストで実行されている Chromium でブラウザーペインを開きます。この Mac の代わりに、このホストの localhost とユーザーエージェントが使用され、ポートは Mac に転送されません。"
 
 msgid "Open changes"
 msgstr "変更を開く"
@@ -15282,6 +15288,9 @@ msgstr "Supersetのトレイメニューから「ホストサービス」>「再
 
 msgid "Use this folder"
 msgstr "このフォルダを使用"
+
+msgid "Use this host's browser"
+msgstr "このホストのブラウザーを使用"
 
 msgid "Use this repo"
 msgstr "このリポジトリを使用"

@@ -7,6 +7,7 @@ import { useCallback } from "react";
 import { TbDeviceDesktop } from "react-icons/tb";
 import { useParams } from "@tanstack/react-router";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
+import { useRemoteBrowserSettings } from "renderer/hooks/host-service/useRemoteBrowserSettings";
 import { electronTrpcClient } from "renderer/lib/trpc-client";
 import type { PaneViewerData } from "../../../../../../types";
 import { browserRuntimeRegistry } from "../../browserRuntimeRegistry";
@@ -28,7 +29,14 @@ interface BrowserPaneToolbarProps {
 export function BrowserPaneToolbar({ ctx }: BrowserPaneToolbarProps) {
 	const { workspaceId } = useParams({ strict: false });
 	const host = useWorkspaceHostTarget(workspaceId ?? null);
-	if (host.status === "ready" && host.kind === "remote") {
+	const remoteBrowser = useRemoteBrowserSettings(
+		host.status === "ready" && host.kind === "remote" ? host.url : null,
+	);
+	if (
+		host.status === "ready" &&
+		host.kind === "remote" &&
+		remoteBrowser.data?.enabled
+	) {
 		return <RemoteBrowserPaneToolbar ctx={ctx} />;
 	}
 	return <LocalBrowserPaneToolbar ctx={ctx} />;

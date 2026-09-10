@@ -1,4 +1,6 @@
 import { useEffect, useMemo, useRef } from "react";
+import { useRemoteBrowserSettings } from "renderer/hooks/host-service/useRemoteBrowserSettings";
+import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { electronTrpc } from "renderer/lib/electron-trpc";
 import { useDashboardSidebarAllPorts } from "../../providers/DashboardSidebarPortsProvider";
 import { portForwardClientId } from "../../utils/portForwardClientId";
@@ -15,14 +17,23 @@ const SYNC_DEBOUNCE_MS = 200;
  */
 export function useRemotePortForwarding(activeWorkspaceId: string | null) {
 	const { workspacePortGroups } = useDashboardSidebarAllPorts();
+	const host = useWorkspaceHostTarget(activeWorkspaceId);
+	const remoteBrowser = useRemoteBrowserSettings(
+		host.status === "ready" && host.kind === "remote" ? host.url : null,
+	);
+	const shouldForward = !(
+		host.status === "ready" &&
+		host.kind === "remote" &&
+		remoteBrowser.data?.enabled
+	);
 	const sync = electronTrpc.portForwards.sync.useMutation();
 	const input = useMemo(
 		() =>
 			deriveForwardSyncInput({
-				activeWorkspaceId,
+				activeWorkspaceId: shouldForward ? activeWorkspaceId : null,
 				groups: workspacePortGroups,
 			}),
-		[activeWorkspaceId, workspacePortGroups],
+		[activeWorkspaceId, shouldForward, workspacePortGroups],
 	);
 	const key = JSON.stringify(input);
 	const mutate = sync.mutate;

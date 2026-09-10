@@ -127,6 +127,9 @@ export const hostSettings = sqliteTable("host_settings", {
 	// inject (CLAUDE_CONFIG_DIR / CODEX_HOME). Null = the system default login.
 	defaultClaudeConfigDir: text("default_claude_config_dir"),
 	defaultCodexHome: text("default_codex_home"),
+	remoteBrowserEnabled: integer("remote_browser_enabled", { mode: "boolean" })
+		.notNull()
+		.default(false),
 });
 
 export const pullRequests = sqliteTable(

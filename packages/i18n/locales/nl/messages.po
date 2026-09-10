@@ -9591,6 +9591,9 @@ msgstr "Alleen eigenaren van de host kunnen het lidmaatschap wijzigen"
 msgid "Only host owners can change this location."
 msgstr "Alleen eigenaren van de host kunnen deze locatie wijzigen."
 
+msgid "Only host owners can change this setting."
+msgstr "Alleen hosteigenaren kunnen deze instelling wijzigen."
+
 msgid "Only host owners can delete this host"
 msgstr "Alleen eigenaren van de host kunnen deze host verwijderen"
 
@@ -9692,6 +9695,9 @@ msgstr "Branch openen op GitHub"
 
 msgid "Open Browser"
 msgstr "Browser openen"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Open browserpanelen in Chromium dat op deze host wordt uitgevoerd. De localhost en user agent van deze host worden gebruikt in plaats van die van deze Mac, en de poorten worden niet doorgestuurd naar je Mac."
 
 msgid "Open changes"
 msgstr "Wijzigingen openen"
@@ -15282,6 +15288,9 @@ msgstr "Gebruik het Superset-menu in de menubalk > Hostservice > Opnieuw starten
 
 msgid "Use this folder"
 msgstr "Deze map gebruiken"
+
+msgid "Use this host's browser"
+msgstr "Browser van deze host gebruiken"
 
 msgid "Use this repo"
 msgstr "Deze repo gebruiken"

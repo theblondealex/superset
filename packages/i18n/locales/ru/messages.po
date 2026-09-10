@@ -9591,6 +9591,9 @@ msgstr "Изменять состав участников может тольк
 msgid "Only host owners can change this location."
 msgstr "Изменять это расположение могут только владельцы хоста."
 
+msgid "Only host owners can change this setting."
+msgstr "Только владельцы хоста могут изменить эту настройку."
+
 msgid "Only host owners can delete this host"
 msgstr "Удалить этот хост могут только владельцы хоста"
 
@@ -9692,6 +9695,9 @@ msgstr "Открыть ветку на GitHub"
 
 msgid "Open Browser"
 msgstr "Открыть браузер"
+
+msgid "Open Browser panes in Chromium running on this host. Its localhost and user agent are used instead of this Mac's, and its ports are not forwarded to your Mac."
+msgstr "Открывайте панели браузера в Chromium, запущенном на этом хосте. Вместо этого Mac используются его localhost и пользовательский агент, а его порты не перенаправляются на ваш Mac."
 
 msgid "Open changes"
 msgstr "Открыть изменения"
@@ -15282,6 +15288,9 @@ msgstr "Откройте меню Superset в трее > Host Service > Restart,
 
 msgid "Use this folder"
 msgstr "Использовать эту папку"
+
+msgid "Use this host's browser"
+msgstr "Использовать браузер этого хоста"
 
 msgid "Use this repo"
 msgstr "Использовать этот репозиторий"
