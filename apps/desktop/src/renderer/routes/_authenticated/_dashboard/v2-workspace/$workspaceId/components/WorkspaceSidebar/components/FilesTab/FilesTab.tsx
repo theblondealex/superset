@@ -1,6 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import type {
 	FileTreeDropResult,
+	FileTreeDropTarget,
 	FileTreeRenameEvent,
 	FileTreeRowDecoration,
 	FileTreeRowDecorationContext,
@@ -23,7 +24,7 @@ import {
 	RefreshCw,
 	Search,
 } from "lucide-react";
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useGitStatusMap } from "renderer/hooks/host-service/useGitStatusMap";
 import {
 	ShadowClickHint,
@@ -59,6 +60,13 @@ const TREE_STYLE = createPierreTreeStyle({
 	withSearchChrome: true,
 });
 
+const ROOT_DROP_TARGET: FileTreeDropTarget = {
+	directoryPath: null,
+	flattenedSegmentPath: null,
+	hoveredPath: null,
+	kind: "root",
+};
+
 type GitStatusData = inferRouterOutputs<AppRouter>["git"]["getStatus"];
 
 interface FilesTabProps {
@@ -82,6 +90,7 @@ export function FilesTab({
 	onSearch,
 }: FilesTabProps) {
 	const { t } = useLingui();
+	const [isRootDropTarget, setIsRootDropTarget] = useState(false);
 	// Shares the query cache with V2WorkspacePage's workspace.get query, so
 	// the first render after a workspace switch typically already has cached
 	// data from React Query (the parent route resolves it first). staleTime
@@ -188,6 +197,37 @@ export function FilesTab({
 	);
 
 	const drop = useFilesTabDrop({ model, bridge, rootPath, workspaceId });
+	const handleRootDragOver = useCallback(
+		(event: React.DragEvent<HTMLDivElement>) => {
+			if (!model.getDragSession()) return;
+			event.preventDefault();
+			event.stopPropagation();
+			model.setDragTarget(ROOT_DROP_TARGET);
+			setIsRootDropTarget(true);
+		},
+		[model],
+	);
+	const handleRootDrop = useCallback(
+		(event: React.DragEvent<HTMLDivElement>) => {
+			if (!model.getDragSession()) return;
+			event.preventDefault();
+			event.stopPropagation();
+			model.setDragTarget(ROOT_DROP_TARGET);
+			model.completeDrag();
+			setIsRootDropTarget(false);
+		},
+		[model],
+	);
+
+	useEffect(() => {
+		const clearRootDropTarget = () => setIsRootDropTarget(false);
+		window.addEventListener("dragend", clearRootDropTarget);
+		window.addEventListener("drop", clearRootDropTarget);
+		return () => {
+			window.removeEventListener("dragend", clearRootDropTarget);
+			window.removeEventListener("drop", clearRootDropTarget);
+		};
+	}, []);
 
 	// Push live git status updates into Pierre.
 	useEffect(() => {
@@ -315,7 +355,20 @@ export function FilesTab({
 			className="relative flex h-full min-h-0 flex-col overflow-hidden"
 			onClickCapture={handleClickCapture}
 			onClick={handleTreeBackgroundClick}
-			onDragOver={drop.onDragOver}
+			onDragOver={(event) => {
+				drop.onDragOver(event);
+				if (
+					!event.nativeEvent
+						.composedPath()
+						.some(
+							(node) =>
+								node instanceof HTMLElement &&
+								node.dataset.rootDropZone !== undefined,
+						)
+				) {
+					setIsRootDropTarget(false);
+				}
+			}}
 			onDragLeave={drop.onDragLeave}
 			onDrop={drop.onDrop}
 		>
@@ -327,7 +380,14 @@ export function FilesTab({
 					header={
 						<div
 							data-file-tree-header="true"
-							className="group flex h-10 items-center gap-1 bg-background px-2"
+							data-root-drop-zone="true"
+							className={`group flex h-10 items-center gap-1 bg-background px-2 ${
+								isRootDropTarget
+									? "border-b-2 border-dashed border-muted-foreground/60"
+									: ""
+							}`}
+							onDragOverCapture={handleRootDragOver}
+							onDropCapture={handleRootDrop}
 						>
 							{onSearch && (
 								<button
