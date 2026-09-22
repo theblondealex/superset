@@ -9,6 +9,7 @@ import type { Command } from "../../core/types";
 import { useActiveCommands } from "../../core/useActiveCommands";
 import { ChatSearchResults } from "../ChatSearchResults";
 import { CommandItemRow } from "../CommandItemRow/CommandItemRow";
+import { WorkspaceSearchResults } from "../WorkspaceList/WorkspaceListFrame";
 
 interface CommandListViewProps {
 	query: string;
@@ -43,6 +44,7 @@ export function CommandListView({ query, onSelect }: CommandListViewProps) {
 				</CommandGroup>
 			))}
 			{chatSearchEnabled && <ChatSearchResults query={query} />}
+			{query.trim() && <WorkspaceSearchResults query={query} />}
 		</CommandList>
 	);
 }
