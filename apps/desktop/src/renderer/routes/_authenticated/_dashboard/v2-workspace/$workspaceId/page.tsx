@@ -6,6 +6,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useFeatureFlagEnabled } from "posthog-js/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import { useContentSearchStore } from "renderer/commandPalette/ui/ContentSearch/contentSearchStore";
 import { useQuickOpenStore } from "renderer/commandPalette/ui/QuickOpen/quickOpenStore";
 import { useWorkspaceHostTarget } from "renderer/hooks/host-service/useWorkspaceHostUrl";
 import { useFileOpenMode } from "renderer/hooks/useFileOpenMode";
@@ -314,11 +315,22 @@ function V2WorkspaceContent() {
 	const quickOpenOpen = useQuickOpenStore(
 		(s) => s.open && s.target?.workspaceId === workspaceId,
 	);
+	const contentSearchOpen = useContentSearchStore(
+		(state) => state.open && state.target?.workspaceId === workspaceId,
+	);
+	useEffect(() => {
+		if (contentSearchOpen) setRightSidebarOpen(true);
+	}, [contentSearchOpen, setRightSidebarOpen]);
 	const closeQuickOpen = useQuickOpenStore((s) => s.close);
 	const openQuickOpenFor = useQuickOpenStore((s) => s.openFor);
+	const openContentSearchFor = useContentSearchStore((s) => s.openFor);
 	const handleQuickOpen = useCallback(
 		() => openQuickOpenFor({ workspaceId }),
 		[openQuickOpenFor, workspaceId],
+	);
+	const handleContentSearch = useCallback(
+		() => openContentSearchFor({ workspaceId }),
+		[openContentSearchFor, workspaceId],
 	);
 	const handleQuickOpenChange = useCallback(
 		(next: boolean) => {
@@ -564,6 +576,7 @@ function V2WorkspaceContent() {
 		isSandbox,
 	});
 	useHotkey("QUICK_OPEN", handleQuickOpen);
+	useHotkey("SEARCH_IN_FILES", handleContentSearch);
 	useHotkey("RUN_WORKSPACE_COMMAND", () => {
 		void workspaceRun.toggleWorkspaceRun();
 	});
