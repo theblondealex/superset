@@ -7,7 +7,6 @@ import {
 	CaseSensitive,
 	ChevronDown,
 	ChevronRight,
-	File,
 	Loader2,
 	Regex,
 	WholeWord,
@@ -15,6 +14,7 @@ import {
 } from "lucide-react";
 import { useId, useMemo, useState } from "react";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
+import { FileIcon } from "renderer/lib/fileIcons";
 import type { OpenFile } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
 import { SearchOptionToggle } from "./components/SearchOptionToggle";
 
@@ -241,7 +241,7 @@ export function ContentSearchView({
 									) : (
 										<ChevronDown className="size-3.5 shrink-0" />
 									)}
-									<File className="size-3.5 shrink-0 text-muted-foreground" />
+									<FileIcon fileName={fileName} className="size-3.5 shrink-0" />
 									<span className="truncate font-medium">{fileName}</span>
 									{directory && (
 										<span className="min-w-0 truncate text-muted-foreground">
