@@ -1,5 +1,9 @@
 import type { Octokit, RestEndpointMethodTypes } from "@octokit/rest";
+import { TRPCError } from "@trpc/server";
+import { eq } from "drizzle-orm";
 import { z } from "zod";
+import { projects } from "../../../../db/schema";
+import type { HostServiceContext } from "../../../../types";
 import {
 	isGithubNotFoundError,
 	isGithubRateLimitError,
@@ -43,7 +47,11 @@ import {
 } from "../shared/pull-request-row-details";
 import type { ExecGh } from "../utils/exec-gh";
 
+import { searchGitLabPullRequests } from "./search-gitlab-pull-requests";
+
 interface PullRequestResult {
+	repoProvider?: "github" | "gitlab";
+	authorAvatarUrl?: string | null;
 	projectId: string;
 	prNumber: number;
 	title: string;
@@ -79,6 +87,8 @@ const githubLoginSchema = z
 		"Must be a valid GitHub username",
 	)
 	.transform((login) => login.replace(/^@/, ""));
+
+const authorSchema = z.string().trim().regex(/^@?(?!.*--)[a-z\d](?:[a-z\d_.-]{0,253}[a-z\d])?(?:\[bot\])?$/i, "Author must be a valid username").transform((login) => login.replace(/^@/, ""));
 
 const pullRequestReviewFilterSchema = z.enum([
 	"none",
@@ -140,7 +150,7 @@ const searchPullRequestsInputSchema = githubSearchInputSchema
 		author: z
 			.string()
 			.transform((value) => value.split(","))
-			.pipe(z.array(githubLoginSchema).min(1).max(20))
+			.pipe(z.array(authorSchema).min(1).max(20))
 			.optional(),
 		// Repeated `review-requested:` qualifiers OR on GitHub, the same way
 		// repeated `author:` does, so several logins widen the result set.
@@ -879,9 +889,10 @@ async function enrichPageWithChecks(
 	}));
 }
 
-export const searchPullRequests = protectedProcedure
-	.input(searchPullRequestsInputSchema)
-	.query(async ({ ctx, input }): Promise<PullRequestsPage> => {
+export type SearchPullRequestsInput = z.infer<typeof searchPullRequestsInputSchema>;
+
+const searchGitHubPullRequests = async ({ ctx, input }: { ctx: HostServiceContext; input: SearchPullRequestsInput }): Promise<PullRequestsPage> => {
+	if (input.author?.some((author) => !/^(?!.*--)[a-z\d](?:[a-z\d-]{0,37}[a-z\d])?(?:\[bot\])?$/i.test(author))) throw new TRPCError({ code: "BAD_REQUEST", message: "Must be a valid GitHub username" });
 		const projectIds = input.projectIds ?? [input.projectId];
 		const projectRepos: ProjectRepo[] = await resolveProjectRepos(
 			projectIds,
@@ -1165,4 +1176,58 @@ export const searchPullRequests = protectedProcedure
 			);
 			throw githubRequestError(err, ctx.credentials);
 		}
+};
+
+export const searchPullRequests = protectedProcedure
+	.input(searchPullRequestsInputSchema)
+	.query(async ({ ctx, input }): Promise<PullRequestsPage> => {
+		const ids = [...new Set(input.projectIds ?? [input.projectId])];
+		const gitlabIds = ids.filter(
+			(id) =>
+				ctx.db.query.projects.findFirst({ where: eq(projects.id, id) }).sync()
+					?.repoProvider === "gitlab",
+		);
+		if (!gitlabIds.length) return searchGitHubPullRequests({ ctx, input });
+		const githubIds = ids.filter((id) => !gitlabIds.includes(id));
+		const searches = gitlabIds.map((projectId) =>
+			searchGitLabPullRequests(ctx, { ...input, projectId }),
+		);
+		const githubProjectId = githubIds[0];
+		if (githubProjectId)
+			searches.push(
+				searchGitHubPullRequests({
+					ctx,
+					input: {
+						...input,
+						projectId: githubProjectId,
+						projectIds: githubIds,
+					},
+				}),
+			);
+		const { results, failures } = collectChunkResults(
+			await Promise.allSettled(searches),
+		);
+		if (failures.length)
+			console.warn(
+				"[workspaceCreation.searchPullRequests] Some repositories failed",
+				failures,
+			);
+		return {
+			pullRequests: mergeByUpdatedAtDesc(
+				results.map((result) => result.pullRequests),
+			),
+			totalCount: results.reduce(
+				(count, result) => count + result.totalCount,
+				0,
+			),
+			hasNextPage: results.some((result) => result.hasNextPage),
+			page: input.page ?? 1,
+			...(results.every((result) => result.repoMismatch)
+				? {
+						repoMismatch: results
+							.map((result) => result.repoMismatch)
+							.join(", "),
+					}
+				: {}),
+		};
 	});
