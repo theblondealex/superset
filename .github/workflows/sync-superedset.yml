@@ -50,4 +50,4 @@ jobs:
         if: steps.sync.outputs.changed == 'true' && vars.SUPEREDSET_RELEASES_ENABLED == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: gh workflow run 374105782 --ref main
+        run: gh workflow run release-desktop-superedset.yml --ref main
