@@ -40,7 +40,7 @@ import {
 import { PierreRowContextMenu } from "renderer/routes/_authenticated/_dashboard/workspace/$workspaceId/components/PierreRowContextMenu";
 import { useOpenInExternalEditor } from "renderer/routes/_authenticated/_dashboard/workspace/$workspaceId/hooks/useOpenInExternalEditor";
 import { setFileDragData } from "../../utils/setFileDragData";
-import type { OpenFile } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
+import type { OpenFile } from "renderer/routes/_authenticated/_dashboard/workspace/$workspaceId/types";
 import { ContentSearchView } from "./components/ContentSearchView";
 import { FileMenuItems } from "./components/FileMenuItems";
 import { FilesTabDropOverlay } from "./components/FilesTabDropOverlay";

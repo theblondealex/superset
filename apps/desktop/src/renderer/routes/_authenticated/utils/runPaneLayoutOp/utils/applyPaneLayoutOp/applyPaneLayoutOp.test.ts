@@ -221,7 +221,7 @@ describe("applyPaneLayoutOp", () => {
 	});
 
 	test("openFile puts an editor pane beside the requested pane", () => {
-		const { state, paneId, tabId } = applyPaneLayoutOp(
+		const { areas, paneId, tabId } = applyPaneLayoutOp(
 			fixture(),
 			{
 				type: "openFile",
@@ -235,7 +235,7 @@ describe("applyPaneLayoutOp", () => {
 		);
 		expect(tabId).toBe("tab-1");
 		expect(paneId).toBe("file-pane");
-		expect(state.tabs[0]?.panes["file-pane"]).toMatchObject({
+		expect(areas.main.tabs[0]?.panes["file-pane"]).toMatchObject({
 			kind: "file",
 			data: {
 				filePath: "/repo/src/example.ts",
@@ -246,7 +246,7 @@ describe("applyPaneLayoutOp", () => {
 	});
 
 	test("openFile defaults a column-only request to line one and code view", () => {
-		const { state } = applyPaneLayoutOp(
+		const { areas } = applyPaneLayoutOp(
 			fixture(),
 			{
 				type: "openFile",
@@ -257,7 +257,7 @@ describe("applyPaneLayoutOp", () => {
 			},
 			() => "file-pane",
 		);
-		expect(state.tabs[0]?.panes["file-pane"]?.data).toMatchObject({
+		expect(areas.main.tabs[0]?.panes["file-pane"]?.data).toMatchObject({
 			pendingPosition: { line: 1, column: 4 },
 			viewId: "code",
 		});

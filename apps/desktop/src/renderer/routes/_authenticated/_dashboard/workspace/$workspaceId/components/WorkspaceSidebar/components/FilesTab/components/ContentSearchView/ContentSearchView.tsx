@@ -15,7 +15,7 @@ import {
 import { useId, useMemo, useState } from "react";
 import { useDebouncedValue } from "renderer/hooks/useDebouncedValue";
 import { FileIcon } from "renderer/lib/fileIcons";
-import type { OpenFile } from "renderer/routes/_authenticated/_dashboard/v2-workspace/$workspaceId/types";
+import type { OpenFile } from "renderer/routes/_authenticated/_dashboard/workspace/$workspaceId/types";
 import { SearchOptionToggle } from "./components/SearchOptionToggle";
 
 const SEARCH_RESULT_LIMIT = 500;

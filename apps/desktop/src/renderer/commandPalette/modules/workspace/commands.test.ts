@@ -16,7 +16,7 @@ const context: CommandContext = {
 	hostServiceStatus: "running",
 	localMachineId: null,
 	notificationSoundsMuted: false,
-	isV2CloudEnabled: true,
+	settingsSectionVisibility: { isMac: true, isAdmin: false, pluginsEnabled: false, cloudUsageEnabled: false, allowedSections: new Set() },
 	navigate: () => {},
 	openNewWorkspace: () => {},
 };

@@ -372,9 +372,9 @@ export function applyPaneLayoutOp(
 		}
 
 		case "openFile": {
-			const { tab } = locatePane(state, op.paneId);
+			const { area, tab } = locatePane(areas, op.paneId);
 			const paneId = createPaneId();
-			const next = runInStore(state, (store) =>
+			const next = inArea(area, (store) =>
 				store.splitPane({
 					tabId: tab.id,
 					paneId: op.paneId,
@@ -398,7 +398,7 @@ export function applyPaneLayoutOp(
 					},
 				}),
 			);
-			return { state: keepSelection(next), paneId, tabId: tab.id };
+			return done(keepSelection(areas, next), paneId, tab.id);
 		}
 
 		case "resize": {
